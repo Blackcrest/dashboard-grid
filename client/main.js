@@ -2,7 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import ReactDom from 'react-dom';
 
-import Dashboard from '../imports/ui/Dashboard'
+import App from '../imports/ui/App'
 import '../imports/startup/simple-schema-configuration.js';
 
 componentDidMount = () => {
@@ -10,5 +10,5 @@ componentDidMount = () => {
 }
 
 Meteor.startup(() => {
-    ReactDom.render(<Dashboard />, document.getElementById('app'));
+    ReactDom.render(<App />, document.getElementById('app'));
 });

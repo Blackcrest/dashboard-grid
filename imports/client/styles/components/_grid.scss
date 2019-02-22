@@ -1,0 +1,23 @@
+.grid {
+    display: grid;
+    height: 100%;
+    width: 300px;
+    grid-template-columns: repeat(4, auto);
+    grid-auto-rows: min-content;
+    
+
+    &__block{
+        height: 7.5rem;
+        width: 7.5rem;
+        border: 1px solid $color-black;
+    }
+
+    &:not(:last-child){
+        margin-right: $large-padding;
+    }
+
+    &::last-child{
+        padding-left: $large-padding;
+    }
+
+}
