@@ -2,4 +2,53 @@
     background: rgba($color-secondary, .4);
     padding: $large-padding;
     width: 20rem;
+    display: flex;
+    flex-direction: column;
+
+    &__create-container{
+        background: $color-white;
+    }
+
+    &__create-input{
+        width: 100%;
+        background: transparent;
+        border: none;
+        transition: .3s all ease;
+        padding: $default-padding;
+        outline: none;
+    }
+
+    &__create-button{
+        width: 100%;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: .3s all ease;
+        text-align: center;
+        padding: $default-padding;
+
+        &:hover{
+            background: $color-primary;
+            color: $color-white;
+        }
+    }
+
+    &__tabs{
+        background: $color-white;
+    }
+}
+
+.tab{
+    padding: $default-padding;
+    transition: .3s all ease;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+
+    &--active{
+        border-color: $color-primary;
+    }
+
+    &:hover{
+        background: rgba($color-secondary, .3);
+    }
 }

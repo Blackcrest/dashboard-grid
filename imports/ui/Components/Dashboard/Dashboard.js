@@ -1,27 +1,35 @@
 import React from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
 
 import TabControl from '../TabControl/TabControl';
 import Grid from './Grid';
 
-export default class Dashboard extends React.Component {
+import { Tabs } from '../../../api/tabs';
+
+export class Dashboard extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            dashboardTabs: [{id: 0, name: "Dashboard 1"}, {id: 1, name: "Dashboard 2"}],
+            dashboardTabs: [],
             selectedDashboard: 0,
         }
     }
 
-    goToDashboard = (id) => {
+    componentWillReceiveProps(nextProps){
+        this.setState({...nextProps});
+    }
 
+    goToDashboard = (id) => {
+        this.setState({selectedDashboard: id});
     }
 
     render() {
         return (
             <div className="content">
                 <TabControl tabs={this.state.dashboardTabs} 
-                            selectedTab={this.state.selectedDashboard} />
+                            selectedTab={this.state.selectedDashboard}
+                            callback={this.goToDashboard} />
                 <div className="dashboard">
                     {this.state.dashboardTabs.length > 0 ? <Grid gridNumber={0} /> : "There are no tabs"}
                 </div>
@@ -29,3 +37,15 @@ export default class Dashboard extends React.Component {
         );
     }
 };
+
+export default withTracker(() => {
+    Meteor.subscribe('tabs');
+
+    const tabs = Tabs.find({}).map((tab, idx) => {
+        return { ...tab, tabId: idx };
+    })
+
+    return{
+        dashboardTabs: tabs
+    }
+})(Dashboard);
