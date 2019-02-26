@@ -71,9 +71,6 @@ export default class Grid extends React.Component {
 
             tileCollection.push(<div key={tileData[id]._id}
                                      className={"grid-tile grid-tile__" + tileData[id].type + uniqueClass}>
-                                Item: {id}<br />
-                                col: {tileData[id].col}<br />
-                                row: {tileData[id].row}
                                 </div>);
         }
 
