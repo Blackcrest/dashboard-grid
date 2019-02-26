@@ -5,7 +5,7 @@ export const Tabs = new Mongo.Collection('tabs');
 
 if(Meteor.isServer){
     Meteor.publish('tabs', function() {
-        return Tabs.find({ userId: this.userId });
+        return Tabs.find({});
     })
 }
 

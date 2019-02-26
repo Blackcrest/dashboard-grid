@@ -1,0 +1,18 @@
+.button{
+    background: transparent;
+    border: 1px solid $color-white;
+    border-radius: 3px;
+    color: $color-white;
+    padding: 0 $default-padding;
+    cursor: pointer;
+    transition: .25s all ease;
+
+    &:not(:last-child){
+        margin-right: $default-margin;
+    }
+
+    &:hover{
+        color: $color-secondary;
+        background: $color-white;
+    }
+}

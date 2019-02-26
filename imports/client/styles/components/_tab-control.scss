@@ -1,9 +1,13 @@
 .tab-control {
-    background: rgba($color-secondary, .4);
     padding: $large-padding;
     width: 20rem;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
+    position: fixed;
+    z-index: 20;
+    height: calc(100vh - 6rem);
+    background: $color-grey;
 
     &__create-container{
         background: $color-white;

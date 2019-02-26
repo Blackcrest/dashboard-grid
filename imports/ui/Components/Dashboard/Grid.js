@@ -1,55 +1,83 @@
 import React from 'react';
 
 export default class Grid extends React.Component {
-    constructor(props){
-        super(props);
+    renderGrid = () => {
+        let grids = []
 
-        this.state = {
-            gridData: [
-                { id: 0, name: "Small 1", type: "small" },
-                { id: 1, name: "Small 2", type: "small" },
-                { id: 2, name: "Small 3", type: "small"},
-                { id: 4, name: "Medium 1", type: "medium"},
-                { id: 7, name: "Wide 1", type: "wide"},
-                { id: 5, name: "Medium 2", type: "medium"},
-                { id: 8, name: "Small 6", type: "small" },
-                { id: 9, name: "Small 7", type: "small"},
-                { id: 10, name: "Small 8", type: "small"},
-                { id: 11, name: "Small 9", type: "small" },
-                { id: 12, name: "Small 10", type: "small"},
-                { id: 13, name: "Small 11", type: "small"},
-                { id: 14, name: "Small 12", type: "small" },
-                { id: 16, name: "Small 13", type: "small"},
-                { id: 17, name: "Small 14", type: "small"},
-                { id: 18, name: "Small 15", type: "small"},
-                { id: 19, name: "Small 16", type: "small" },
-                { id: 20, name: "Small 17", type: "small"}
-            ]
+        const data = this.calculatePositions();
+
+        if(data === undefined){
+            grids.push(<div key="no-data">
+                <h3>There is no data.</h3>
+                <p>Please add a tile using one of the buttons in the action bar above.</p>
+            </div>)
+        } else{
+            data.map((gridData, idx) => {
+                grids.push(<div key={"grid-" + idx } className="grid" id={"grid-" + idx }>
+                                {this.renderTiles(gridData)}
+                           </div>)
+            })
         }
+
+        return grids;
     }
 
-    renderGrid = () => {
-        let grid = [];
+    calculatePositions = () => {
+        let updatedData = []
+        let tempData = [];
         let col = 1;
         let row = 1;
 
-        this.state.gridData.map((gridItem, idx) => {
-            if(row > 8)
-                return;
+        if(this.props.data.length === 0)
+            return;
 
-            let uniqueClass = row % 2 == 0 ? " col-" + col + " row-" + row : '';
-
-            grid.push(<div key={gridItem.id}
-                           className={"grid-tile grid-tile__" + gridItem.type + uniqueClass}>
-                           {gridItem.name}</div>);
-
-            let updatedVars = this.updateColAndRow(this.state.gridData[idx], this.state.gridData[idx+1], col, row);
+        this.props.data.map((dataItem, idx) => {
+            tempData.push({
+                ...dataItem,
+                col,
+                row
+            })
             
+            let updatedVars = this.updateColAndRow(this.props.data[idx], 
+                this.props.data[idx+1], 
+                col, 
+                row);
+
             col = updatedVars.col;
-            row = updatedVars.row;
+            row = updatedVars.row; 
+
+            if(row > 8 || (this.props.data.length - 1) === idx){
+                updatedData.push({...tempData})
+    
+                col = 1;
+                row = 1;
+    
+                tempData = [];
+            } 
         })
 
-        return grid;
+        return updatedData;
+    }
+
+    renderTiles = (tileData) => {
+        let tileCollection = [];
+
+        if(tileData.length === 0){
+            console.log('empty tiles')
+        }
+
+        for(var id in tileData){
+            let uniqueClass = tileData[id].type === 'small'? " col-" + tileData[id].col + " row-" + tileData[id].row : '';
+
+            tileCollection.push(<div key={tileData[id]._id}
+                                     className={"grid-tile grid-tile__" + tileData[id].type + uniqueClass}>
+                                Item: {id}<br />
+                                col: {tileData[id].col}<br />
+                                row: {tileData[id].row}
+                                </div>);
+        }
+
+        return tileCollection;
     }
 
 
@@ -61,34 +89,26 @@ export default class Grid extends React.Component {
         let updatedRow = row;
 
         if(nextItem.type === 'small'){
-            if(col === 2){
-                if(row % 2 == 0){
-                    updatedCol = 3;
-                    updatedRow--;
-                }else{
-                    updatedCol--;
-                    updatedRow++;
-                }
-            } else if(col === 4){
-                if(row % 2 == 0){
-                    updatedCol = 1;
-                } else{
-                    updatedCol--;
-                }
-                updatedRow++;
-            } else {
-                updatedCol++;
-            }
-            
             if(prevItem.type === 'wide'){
                 updatedRow = updatedRow + 2;
             } else if(prevItem.type === 'medium'){
                 if(col < 3){
-                    updatedCol++;
+                    updatedCol = col % 2 == 0 ? updatedCol + 1 : updatedCol + 2; 
                 } else{
-                    updatedCol = updatedCol + 2;
+                    updatedCol = 1;
+                    updatedRow = updatedRow + 2;
                 }
-            } 
+            } else {
+                if(col === 2){
+                    updatedCol = row % 2 == 0 ? 3 : updatedCol - 1 ;
+                    updatedRow = row % 2 == 0 ? updatedRow - 1 : updatedRow + 1;
+                } else if(col === 4){
+                    updatedCol = row % 2 == 0 ? 1 : updatedCol - 1 ;
+                    updatedRow++;
+                } else {
+                    updatedCol++;
+                }
+            }
         } else if(nextItem.type === 'medium'){
             if(row % 2 == 0){
                 updatedRow--;
@@ -112,14 +132,12 @@ export default class Grid extends React.Component {
             }
         }
 
-        console.log("Position of " + nextItem.name +":", {col: updatedCol, row: updatedRow})
-
         return {col: updatedCol, row: updatedRow};
     }
 
     render() {
         return (
-            <div className="grid" id={"grid-" + this.props.gridNumber }>
+            <div className="dashboard">
                 {this.renderGrid()}
             </div>
         );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Session } from 'meteor/session';
 
 import Tab from './Tab';
 
@@ -62,14 +63,14 @@ export default class TabControl extends React.Component {
     }
 
     navigateToTab = (id) => {
-        this.props.callback(id)
+        Session.set('tabId', id);
     }
 
     renderTabs = () => {
         return this.props.tabs.map(tab => {
             return <Tab key={"tab-" + tab._id} 
-                        active={this.props.selectedTab === tab.tabId ? true : false}
-                        id={tab.tabId}
+                        active={this.props.selectedTab === tab._id ? true : false}
+                        id={tab._id}
                         name={tab.name}
                         onClickEvent={this.navigateToTab}/>;
         })

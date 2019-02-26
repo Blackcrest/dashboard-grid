@@ -2,20 +2,20 @@
     position: relative;
     display: grid;
     height: 100%;
-    width: 430px;
-    grid-template-columns: repeat(auto-fit, 100px);
-    grid-template-rows: repeat(auto-fit, 100px);
+    width: 390px;
+    grid-template-columns: repeat(auto-fit, 90px);
+    grid-template-rows: repeat(8, 90px);
     grid-gap: 10px;
     
 
     &__block{
-        height: 10.5rem;
-        width: 10.5rem;
+        height: 9.5rem;
+        width: 9.5rem;
         border: 1px solid $color-black;
     }
 
     &:not(:last-child){
-        margin-right: $large-padding;
+        margin-right: $huge-margin;
     }
 
     &::last-child{
@@ -43,13 +43,17 @@
     }
 }
 
+.col-2{ grid-column: 1 / span 1; }
 .col-2{ grid-column: 2 / span 1; }
 .col-3{ grid-column: 3 / span 1; }
 .col-4{ grid-column: 4 / span 1; }
 
+.row-1{ grid-row: 1 / span 1; }
 .row-2{ grid-row: 2 / span 1; }
+.row-3{ grid-row: 3 / span 1; }
 .row-4{ grid-row: 4 / span 1; }
+.row-5{ grid-row: 5 / span 1; }
 .row-6{ grid-row: 6 / span 1; }
+.row-7{ grid-row: 7 / span 1; }
 .row-8{ grid-row: 8 / span 1; }
-.row-10{ grid-row: 10 / span 1; }
 

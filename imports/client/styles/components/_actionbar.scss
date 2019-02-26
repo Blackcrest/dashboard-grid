@@ -3,4 +3,7 @@
     color: $color-white;
     padding: $large-padding;
     height: 6rem;
+    display: flex;
+    position: fixed;
+    width: 100%;
 }

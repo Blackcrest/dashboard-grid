@@ -1,9 +1,8 @@
 .dashboard{
-    background: rgba($color-secondary, .2);
     flex-grow: 1;
     padding: $large-padding;
-    height: calc(100vh - 6rem);
+    padding-left: 21.6rem;
+    height: calc(100vh - 8rem);
     display: flex;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    flex-shrink: 0;
 }
