@@ -1,14 +1,16 @@
 .grid {
+    position: relative;
     display: grid;
     height: 100%;
-    width: 300px;
-    grid-template-columns: repeat(4, auto);
-    grid-auto-rows: min-content;
+    width: 430px;
+    grid-template-columns: repeat(auto-fit, 100px);
+    grid-template-rows: repeat(auto-fit, 100px);
+    grid-gap: 10px;
     
 
     &__block{
-        height: 7.5rem;
-        width: 7.5rem;
+        height: 10.5rem;
+        width: 10.5rem;
         border: 1px solid $color-black;
     }
 
@@ -21,3 +23,33 @@
     }
 
 }
+
+.grid-tile {
+    background: $color-white;
+
+    &__small{
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    &__medium{
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+
+    &__wide{
+        grid-column: span 4;
+        grid-row: span 2;
+    }
+}
+
+.col-2{ grid-column: 2 / span 1; }
+.col-3{ grid-column: 3 / span 1; }
+.col-4{ grid-column: 4 / span 1; }
+
+.row-2{ grid-row: 2 / span 1; }
+.row-4{ grid-row: 4 / span 1; }
+.row-6{ grid-row: 6 / span 1; }
+.row-8{ grid-row: 8 / span 1; }
+.row-10{ grid-row: 10 / span 1; }
+
